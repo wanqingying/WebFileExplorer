@@ -1,12 +1,12 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
 import "./App.css";
-import { Provider, useStore, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 
-import { useReduxState, store } from "client/src/store";
+import { useRxTodoState, useRxHook } from "client/src/store/todo";
+import { store } from "client/src/store";
 
 function App() {
-  const { state, action } = useReduxState();
+  const { state, actions } = useRxTodoState();
+  useRxHook();
   console.log("state", state);
 
   return (
@@ -16,7 +16,7 @@ function App() {
         <button
           onClick={() => {
             const ip = document.getElementById("todo-txt") as HTMLInputElement;
-            action.setTitle(ip.value);
+            actions.setTitle(ip.value);
             ip.value = "";
           }}
         >
@@ -28,23 +28,23 @@ function App() {
         <button
           onClick={() => {
             const ip = document.getElementById("todo-txt2") as HTMLInputElement;
-            action.addOneTodo(ip.value);
+            actions.addTodo(ip.value);
             ip.value = "";
           }}
         >
-          add one todo
+          add sync
         </button>
-          <button
+        <button
           onClick={() => {
             const ip = document.getElementById("todo-txt2") as HTMLInputElement;
-            action.addTodo(ip.value);
+            actions.addTodoAsync(ip.value);
             ip.value = "";
           }}
         >
-          add todo
+          add async
         </button>
       </div>
-        <div>status:{state.status}</div>
+      <div>status:{state.status}</div>
       <div>
         <div>title:{state.title}</div>
         <ul
@@ -55,7 +55,7 @@ function App() {
             flexDirection: "column",
           }}
         >
-          {state.todos.map((todo) => {
+          {state.todoList.map((todo) => {
             return <span key={todo.id}>{todo.text}</span>;
           })}
         </ul>
