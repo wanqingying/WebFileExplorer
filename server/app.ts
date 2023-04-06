@@ -17,7 +17,7 @@ app.use(router.allowedMethods());
 
 app.listen(3500);
 
-router.get("/file/list", async (ctx: any, next: any) => {
+router.get("/root", async (ctx: any, next: any) => {
   const fid = await test();
   ctx.body = fid.join(",");
   await next();

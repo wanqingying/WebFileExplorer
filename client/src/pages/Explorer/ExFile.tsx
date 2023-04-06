@@ -8,9 +8,8 @@ const RootDiv: React.ElementType<HTMLProps<HTMLDivElement>> = styled.div`
 interface IProps {}
 
 // desc
-export const MainFile: FC<IProps> = function (props) {
-  console.log("main file");
-  return <RootDiv> MainFile </RootDiv>;
+export const ExFile: FC<IProps> = function (props) {
+  return <RootDiv> ExFile </RootDiv>;
 };
 
-export default MainFile;
+export default ExFile;

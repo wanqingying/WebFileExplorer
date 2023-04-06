@@ -1,6 +1,6 @@
 declare module "*.svg";
 
-declare namespace webSys {
+declare namespace web_fs {
   export interface todoStore {
     loading?: boolean;
     todos: any[];
@@ -9,5 +9,12 @@ declare namespace webSys {
     text: string;
     status: number;
     id: any;
+  }
+  interface PathCell {
+    path: string;
+    element: any;
+    children?: PathCell[];
+    title?: string;
+    index?: any;
   }
 }
