@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { useSelector } from "react-redux";
-import { RootStateType, store } from "./index";
-import { ReduxHook } from "./middleware";
+import { useDispatch, useSelector } from "react-redux";
+import {RootStateType} from './index'
+
 
 function mockAsync<T extends any>(data: T) {
   return new Promise<T>((resolve) => {
@@ -12,13 +12,11 @@ function mockAsync<T extends any>(data: T) {
 }
 
 const asyncActions = {
-  addTodoAsync: (data: string, action?: SyncActionType) => {
-    console.log("a");
-    debugger;
+  addTodo: (data: string, action?: TodoActionType) => {
     action.setStatus("loading");
     mockAsync(data)
       .then((res) => {
-        action.addTodoSync(res);
+        action.addOneTodo(res);
       })
       .finally(() => {
         action.setStatus("done");
@@ -26,15 +24,15 @@ const asyncActions = {
   },
 };
 
-export interface TodoStateType {
-  loading?: string;
+export interface MobileStateType {
+  status?: string;
   todos: { text: string; status: number; id: any }[];
   title: string;
 }
 
-export const ReduxTodoState = createSlice({
-  name: "todo",
-  initialState: { todos: [], title: "txt" } as TodoStateType,
+export const ReduxMobileState = createSlice({
+  name: "mobile",
+  initialState: { todos: [], title: "txt" } as MobileStateType,
   reducers: {
     setTitle: (state, action: PayloadAction<string>) => {
       return {
@@ -42,7 +40,7 @@ export const ReduxTodoState = createSlice({
         title: action.payload,
       };
     },
-    addTodoSync: (state, action: PayloadAction<string>) => {
+    addOneTodo: (state, action: PayloadAction<string>) => {
       state.todos.push({
         id: Date.now().valueOf(),
         text: action.payload,
@@ -50,17 +48,13 @@ export const ReduxTodoState = createSlice({
       });
     },
     setStatus: (state, action: PayloadAction<string>) => {
-      state.loading = action.payload;
+      state.status = action.payload;
     },
   },
   extraReducers: (builder) => {
-    builder.addCase("todo/addTodoSync", (state, action) => {
-      console.log("add case setTitle");
-      console.log("ac", action);
-    });
     builder.addMatcher(
       (action) => {
-        return action.type === "todo/addTodoSync";
+        return action.type === "todo/addOneTodo";
       },
       (state, action) => {
         console.log("match action", action);
@@ -70,13 +64,14 @@ export const ReduxTodoState = createSlice({
   },
 });
 
-export const actions: typeof ReduxTodoState.actions & typeof asyncActions = {
-  ...ReduxTodoState.actions,
+export const actions: typeof ReduxMobileState.actions &
+  typeof asyncActions = {
+  ...ReduxMobileState.actions,
   ...asyncActions,
 };
 
-export function getTodoAction(): typeof actions {
-  const dispatch = store.dispatch;
+export function useActions() {
+  const dispatch = useDispatch();
 
   return new Proxy(actions, {
     get: (target: any, prop: string, rx) => {
@@ -88,13 +83,10 @@ export function getTodoAction(): typeof actions {
   });
 }
 
-export type SyncActionType = typeof ReduxTodoState.actions;
-ReduxHook.match(actions.setTitle.type).later(() => {
-  getTodoAction().addTodoAsync("another one");
-});
+export type TodoActionType = typeof ReduxMobileState.actions;
 
-export function useTodoState() {
-  const todo = useSelector<RootStateType, TodoStateType>((state) => state.todo);
-  const action = getTodoAction();
+export function useMobileState() {
+  const todo = useSelector<RootStateType, MobileStateType>((state) => state.mobile);
+  const action = useActions();
   return { state: todo, action: action };
 }

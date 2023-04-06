@@ -2,12 +2,11 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 import { Provider, useStore, useDispatch } from "react-redux";
-
-import { useReduxState, store } from "client/src/store";
+import { store } from "client/src/store";
+import { useTodoState } from "client/src/store/todo";
 
 function App() {
-  const { state, action } = useReduxState();
-  console.log("state", state);
+  const { state, action } = useTodoState();
 
   return (
     <div className="App">
@@ -28,23 +27,23 @@ function App() {
         <button
           onClick={() => {
             const ip = document.getElementById("todo-txt2") as HTMLInputElement;
-            action.addOneTodo(ip.value);
+            action.addTodoSync(ip.value);
             ip.value = "";
           }}
         >
-          add one todo
+          add sync
         </button>
-          <button
+        <button
           onClick={() => {
             const ip = document.getElementById("todo-txt2") as HTMLInputElement;
-            action.addTodo(ip.value);
+            action.addTodoAsync(ip.value);
             ip.value = "";
           }}
         >
-          add todo
+          add async
         </button>
       </div>
-        <div>status:{state.status}</div>
+      <div>status:{state.loading}</div>
       <div>
         <div>title:{state.title}</div>
         <ul
