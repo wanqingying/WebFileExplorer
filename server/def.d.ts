@@ -1,6 +1,6 @@
 declare module "*.svg";
 
-export declare namespace web_fs {
+declare namespace web_fs {
   export interface todoStore {
     loading?: boolean;
     todos: any[];

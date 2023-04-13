@@ -17,9 +17,10 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "client": ["./client"]
+      "client": ["./client"],
+      "dts": ["./def.d.ts"]
     }
   },
-  "include": ["client", "def.d.ts"],
+  "include": ["client", "def.d.ts","server"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
