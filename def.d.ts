@@ -11,13 +11,14 @@ export declare namespace web_fs {
     id: any;
   }
 
-  interface FileStat {
-    name:string
-    absolutePath:string
+  interface FsStatType {
+    isFile: boolean;
+    name: string;
+    absolutePath: string;
     // bit
-    size:number
-    create_time:number
-    update_time:number
+    size: number;
+    create_time: number;
+    update_time: number;
     /**
      * The root of the path such as '/' or 'c:\'
      */
