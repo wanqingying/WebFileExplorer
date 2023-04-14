@@ -3,15 +3,18 @@ import React from "react";
 import { ReduxMobileState } from "./mobile";
 import { ReduxTodoState } from "./todo";
 import { hookMiddleware } from "./middleware";
+import { ReduxExploreState } from "client/src/pages/Explorer/state";
 
 export const store = configureStore({
   reducer: {
     todo: ReduxTodoState.reducer,
     mobile: ReduxMobileState.reducer,
+    explore: ReduxExploreState.reducer,
   },
   preloadedState: {
     todo: ReduxTodoState.getInitialState(),
     mobile: ReduxMobileState.getInitialState(),
+    explore: ReduxExploreState.getInitialState(),
   },
   middleware: [hookMiddleware],
 });

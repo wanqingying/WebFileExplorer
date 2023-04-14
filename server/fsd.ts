@@ -1,9 +1,8 @@
 import * as fs from "fs";
 import path, { parse } from "path";
-import config from "./config.json";
 import { web_fs } from "dts";
 
-export async function getFileStatListByPath(
+export async function getFileStatByPath(
   pathName: string
 ): Promise<web_fs.FsStatType> {
   const ps = path.parse(pathName);
@@ -22,25 +21,36 @@ export async function getFileStatListByPath(
     return null;
   }
 }
+export async function getFileStatListByFolder(
+  absolutePath: string
+): Promise<web_fs.FsStatType[]> {
+  const files = fs.readdirSync(absolutePath);
 
-export async function test(): Promise<string[]> {
-  try {
-    const files = fs.readdirSync(path.resolve(__dirname, config.root));
-    console.log("files", files);
-    for (const file of files) {
-      const sta = await getFileStatListByPath(
-        path.resolve(__dirname, config.root, file)
-      );
-      const kb = sta.size / 1024;
-      console.log("file stat " + file);
-      console.log(sta);
-      console.log(`file ${file} size ${kb}kb`);
-      debugger;
-    }
-    return [];
-  } catch (err) {
-    console.error(err);
-    return [];
-  }
+  return Promise.all(
+    files.map(async (fp) => {
+      return getFileStatByPath(path.resolve(absolutePath, fp));
+    })
+  );
 }
-test();
+
+// export async function test(): Promise<string[]> {
+//   try {
+//     const files = fs.readdirSync(path.resolve(__dirname, config.root));
+//     console.log("files", files);
+//     for (const file of files) {
+//       const sta = await getFileStatByPath(
+//         path.resolve(__dirname, config.root, file)
+//       );
+//       const kb = sta.size / 1024;
+//       console.log("file stat " + file);
+//       console.log(sta);
+//       console.log(`file ${file} size ${kb}kb`);
+//       debugger;
+//     }
+//     return [];
+//   } catch (err) {
+//     console.error(err);
+//     return [];
+//   }
+// }
+// test();

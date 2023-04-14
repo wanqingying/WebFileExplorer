@@ -2,9 +2,11 @@ const Koa = require("koa");
 const serve = require("koa-static");
 const bodyparser = require("koa-bodyparser");
 const Router = require("@koa/router");
-const router = new Router();
-import { test } from "./fsd";
+import path from "path";
+import { root } from "./config";
 
+const router = new Router();
+import { getFileStatListByFolder } from "./fsd";
 
 const app = new Koa();
 
@@ -14,11 +16,17 @@ app.use(serve("../client/dist"));
 app.use(router.routes());
 app.use(router.allowedMethods());
 
+app.use(async (context, next) => {
+  console.log("req url", context.request.originalUrl);
+  return await next();
+});
 
 app.listen(3500);
 
-router.get("/file/list", async (ctx: any, next: any) => {
-  const fid = await test();
-  ctx.body = fid.join(",");
+router.get("/api/file/list", async (ctx, next: any) => {
+  const q = ctx.request.query;
+  const _path = q.path;
+  console.log("path", path.join(root, _path));
+  ctx.body = await getFileStatListByFolder(path.join(root, _path));
   await next();
 });

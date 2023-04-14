@@ -1,66 +1,36 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import reactLogo from "./assets/react.svg";
-import "./App.css";
 import { Provider, useStore, useDispatch } from "react-redux";
 import { store } from "client/src/store";
 import { useTodoState } from "client/src/store/todo";
+import { Example } from "client/src/pages/Example";
+import { MainFile } from "client/src/pages/Explorer/MainFile";
+import { BaseLayout } from "client/src/components/BaseLayout";
+
+import {
+  Router,
+  Routes,
+  BrowserRouter,
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 
 function App() {
   const { state, action } = useTodoState();
-
-  return (
-    <div className="App">
-      <div>
-        <input type="text" id={"todo-txt"} />{" "}
-        <button
-          onClick={() => {
-            const ip = document.getElementById("todo-txt") as HTMLInputElement;
-            action.setTitle(ip.value);
-            ip.value = "";
-          }}
-        >
-          set title
-        </button>
-      </div>
-      <div>
-        <input type="text" id={"todo-txt2"} />{" "}
-        <button
-          onClick={() => {
-            const ip = document.getElementById("todo-txt2") as HTMLInputElement;
-            action.addTodoSync(ip.value);
-            ip.value = "";
-          }}
-        >
-          add sync
-        </button>
-        <button
-          onClick={() => {
-            const ip = document.getElementById("todo-txt2") as HTMLInputElement;
-            action.addTodoAsync(ip.value);
-            ip.value = "";
-          }}
-        >
-          add async
-        </button>
-      </div>
-      <div>status:{state.loading}</div>
-      <div>
-        <div>title:{state.title}</div>
-        <ul
-          style={{
-            height: 400,
-            overflow: "auto",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          {state.todos.map((todo) => {
-            return <span key={todo.id}>{todo.text}</span>;
-          })}
-        </ul>
-      </div>
-    </div>
-  );
+  const router = React.useMemo(function () {
+    return createBrowserRouter([
+      {
+        path: "/",
+        element: <BaseLayout />,
+        children: [
+          // { path: "/main", element: <MainFile /> },
+          { path: "/main/*", element: <MainFile /> },
+          { path: "/exp", element: <Example /> },
+        ],
+      },
+    ]);
+  }, []);
+  return <RouterProvider router={router} />;
 }
 
 export default (prop) => {
