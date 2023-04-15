@@ -10,8 +10,8 @@ export async function getFileStatByPath(
     const sta = await fs.statSync(pathName);
     return {
       absolutePath: pathName,
-      update_time: sta.atimeMs,
-      create_time: sta.birthtimeMs,
+      updateTime: sta.atimeMs,
+      createTime: sta.birthtimeMs,
       size: sta.size,
       isFile: sta.isFile(),
       ...ps,

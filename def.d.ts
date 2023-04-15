@@ -17,8 +17,8 @@ export declare namespace web_fs {
     absolutePath: string;
     // bit
     size: number;
-    create_time: number;
-    update_time: number;
+    createTime: number;
+    updateTime: number;
     /**
      * The root of the path such as '/' or 'c:\'
      */
@@ -36,4 +36,11 @@ export declare namespace web_fs {
      */
     ext: string;
   }
+  export interface BaseRes<T> {
+    code: number;
+    msg?: string;
+    data: T;
+  }
+
+  export type AxResType<T> = Promise<BaseRes<T>>;
 }

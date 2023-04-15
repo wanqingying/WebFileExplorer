@@ -12,8 +12,15 @@ function mockAsync<T extends any>(data: T) {
 export const asyncActions = {
   changePath: (path: string, action?: IActionType) => {
     action.setLoading(true);
-    getFilStatListByPath(path).then((res) => {
-      console.log("res", res);
-    });
+    getFilStatListByPath(path)
+      .then((res) => {
+        if (res.code !== 0) return Promise.reject(res.msg);
+        action.setFileList(res.data);
+        action.setLoading(false);
+      })
+      .catch((e) => {
+        console.error(e);
+        action.setLoading(false);
+      });
   },
 };

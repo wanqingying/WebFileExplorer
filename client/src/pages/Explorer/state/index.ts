@@ -4,12 +4,13 @@ import { IExploreType, ReduxExploreState, IActionType } from "./def";
 import { asyncActions } from "./async";
 import React from "react";
 import { RootPath } from "client/src/utils/const";
+import {web_fs} from "dts";
 
 const actions: typeof ReduxExploreState.actions & typeof asyncActions = {
   ...ReduxExploreState.actions,
   ...asyncActions,
 };
-export function getActions():typeof actions{
+export function getActions(): typeof actions {
   const dispatch = store.dispatch;
 
   return new Proxy(actions, {
@@ -34,20 +35,17 @@ export function useExpPath() {
   const [path] = useSelector<RootStateType, [string]>((state) => [
     state.explore.path,
   ]);
-  // const views = React.useMemo(
-  //   function () {
-  //     const result = path
-  //       .split("/")
-  //       .map((p) => {
-  //         return { name: p };
-  //       })
-  //       .filter(Boolean);
-  //     return result;
-  //   },
-  //   [path]
-  // );
+
   return {
     path: path,
+    actions: getActions(),
+  };
+}
+export function useFileList() {
+  const files = useSelector<RootStateType, web_fs.FsStatType[]>((state) => state.explore.fileList);
+
+  return {
+    files: files,
     actions: getActions(),
   };
 }

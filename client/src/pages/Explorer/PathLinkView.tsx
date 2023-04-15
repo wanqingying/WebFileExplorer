@@ -42,6 +42,7 @@ export const PathLinkView: FC<IProps> = function (props) {
       {resolvePath().map((p, idx) => {
         return (
           <span
+            key={p.path}
             className={`x-sp-link is-link-${p.isLink}`}
             style={{
               height: 30,
@@ -50,7 +51,7 @@ export const PathLinkView: FC<IProps> = function (props) {
             }}
             onClick={(e) => {
               if (!p.isLink) return;
-              actions.changePath(p.path)
+              actions.changePath(p.path);
             }}
           >
             {p.ele}

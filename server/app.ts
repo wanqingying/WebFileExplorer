@@ -27,6 +27,7 @@ router.get("/api/file/list", async (ctx, next: any) => {
   const q = ctx.request.query;
   const _path = q.path;
   console.log("path", path.join(root, _path));
-  ctx.body = await getFileStatListByFolder(path.join(root, _path));
+  const files = await getFileStatListByFolder(path.join(root, _path));
+  ctx.body = { data: files, code: 0 };
   await next();
 });
