@@ -1,0 +1,36 @@
+###
+
+# curl 'http://localhost:3400/api/file/list?path=%2F'
+#  -H 'Accept: application/json, text/plain, */*'
+#  -H 'Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,zh-HK;q=0.7'
+#  -H 'Cache-Control: no-cache'
+#  -H 'Connection: keep-alive'
+#  -H 'Cookie: _lxsdk_cuid=183bfdadf36c8-08447959f4d6af-19525635-384000-183bfdadf36c8; Idea-8951df61=eedb2600-33fe-40ca-9906-12b255040dc7; 427f335fe6_ssoid=eAGFj61LQ1EcQHmm8ZIOBOOLbkHu_d2P370m3_a2PDAIFrmfcRbFYnCGNVFsWlwQoyvCDBaj2GwG48OHQUxbsKiI2T_gHM6pJfNvH-9z2XA0u5gRSDlgZEzEIFczY4Ea4wO1ILijQQUfmjYCMoKcOdN6SuqNjWDXXeiH_aLD2wS6WEBbC9CF7haIOUMOLZ13sJM9Pt9PPgn8q1U_QWsLvbuHl-mUHCY0TXPntnf7O709X1-sbq7K40l5clSOh6-jQXV9WY0HS0l2cHvWWP5lTpPaX9Z5smK8QGEtpzRE1FoHGXlAJZghVAKRW1QqSjVFJZHAZmYDKIPUg2p-b0duFGOaRC8dSNBgvwA3-WmL**eAENycEBwCAIA8CVIIjFcUpD9h_B3vfCOj0Rr05ze_XOrywABvMMn5EBa1cuuObfIQVIKiv4BSjJEVU**lviyR4dkgwjsnrGBcBny8c4tByEg9ie3hkKwrPQtale2bu9BToR77AFtFtIDpfWXDY_NDE1HY9FuHHT3exK8Gw**NjAxMDk4Nix3YW5xaW5neWluZyzkuIfmuIXpopYsd2FucWluZ3lpbmdAdGVzdC5jb20sMSwwMzI0MDQ2MCwxNjgxMjc4MjI2NDM4; 3e000841b0_ssoid=eAGFjiFLBEEYQBnTsUkPBONG74J88823OzMm927v8oFBsMjuN7PxLIrF4BlshyIYNBnEw6BXBO02o8k_sLiIiO0UDCpiNj_e49XE9PPb61R4P7o7egcMlAcAQzKHxdBDpBkYCu8sWTLmGzYLTw7RoWbbehD1xorPl9n3_XbaoTZgV6fYthHa1HZTrROlCVs26ehO-FENLz8B_82an6Glmd7k8eJlArtCBkHCvL7Z3-htufpsdX1e7t-UB8NyvPd0OqiuzqrxYE6EO7fHjflf51DU_rZOxAKh46JgptyZGDJHmiOVK7YSrLRxtiZjI0kZUhIMroaGsxwkag1NpMwZazJLzkcstYwUuy8aLmjV**eAEFwQkBwDAIA0BLQGgb5PAM_xJ2hwv6C84XdBo6dy1r_AHroibXsg0VPcs-KmdDuDFaPN0_JXgRYg**M60XeBXIbtnXxQHIALQIFcswpvCU_JzC3hg5EecWc54Ov2fYf3kzPCfY3NB95nM8xyxv5s0q7X1GbEmCMD5SMQ**NjAxMDk4Nix3YW5xaW5neWluZyzkuIfmuIXpopYsd2FucWluZ3lpbmdAdGVzdC5jb20sMSwwMzI0MDQ2MCwxNjgxNTI0ODM5Mzcw; webNewUuid=42dcffcc4bd860ad47c53b3c9109196a_1681438431082'
+#  -H 'Pragma: no-cache'
+#  -H 'Referer: http://localhost:3400/main'
+#  -H 'Sec-Fetch-Dest: empty'
+#  -H 'Sec-Fetch-Mode: cors'
+#  -H 'Sec-Fetch-Site: same-origin'
+#  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36'
+#  -H 'sec-ch-ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"'
+#  -H 'sec-ch-ua-mobile: ?0'
+#  -H 'sec-ch-ua-platform: "macOS"'
+#  --compressed
+GET http://localhost:3400/api/file/download?file=data.json
+Accept: application/json, text/plain, */*
+Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,zh-HK;q=0.7
+Cache-Control: no-cache
+Connection: keep-alive
+Cookie: _lxsdk_cuid=183bfdadf36c8-08447959f4d6af-19525635-384000-183bfdadf36c8; Idea-8951df61=eedb2600-33fe-40ca-9906-12b255040dc7; 427f335fe6_ssoid=eAGFj61LQ1EcQHmm8ZIOBOOLbkHu_d2P370m3_a2PDAIFrmfcRbFYnCGNVFsWlwQoyvCDBaj2GwG48OHQUxbsKiI2T_gHM6pJfNvH-9z2XA0u5gRSDlgZEzEIFczY4Ea4wO1ILijQQUfmjYCMoKcOdN6SuqNjWDXXeiH_aLD2wS6WEBbC9CF7haIOUMOLZ13sJM9Pt9PPgn8q1U_QWsLvbuHl-mUHCY0TXPntnf7O709X1-sbq7K40l5clSOh6-jQXV9WY0HS0l2cHvWWP5lTpPaX9Z5smK8QGEtpzRE1FoHGXlAJZghVAKRW1QqSjVFJZHAZmYDKIPUg2p-b0duFGOaRC8dSNBgvwA3-WmL**eAENycEBwCAIA8CVIIjFcUpD9h_B3vfCOj0Rr05ze_XOrywABvMMn5EBa1cuuObfIQVIKiv4BSjJEVU**lviyR4dkgwjsnrGBcBny8c4tByEg9ie3hkKwrPQtale2bu9BToR77AFtFtIDpfWXDY_NDE1HY9FuHHT3exK8Gw**NjAxMDk4Nix3YW5xaW5neWluZyzkuIfmuIXpopYsd2FucWluZ3lpbmdAdGVzdC5jb20sMSwwMzI0MDQ2MCwxNjgxMjc4MjI2NDM4; 3e000841b0_ssoid=eAGFjiFLBEEYQBnTsUkPBONG74J88823OzMm927v8oFBsMjuN7PxLIrF4BlshyIYNBnEw6BXBO02o8k_sLiIiO0UDCpiNj_e49XE9PPb61R4P7o7egcMlAcAQzKHxdBDpBkYCu8sWTLmGzYLTw7RoWbbehD1xorPl9n3_XbaoTZgV6fYthHa1HZTrROlCVs26ehO-FENLz8B_82an6Glmd7k8eJlArtCBkHCvL7Z3-htufpsdX1e7t-UB8NyvPd0OqiuzqrxYE6EO7fHjflf51DU_rZOxAKh46JgptyZGDJHmiOVK7YSrLRxtiZjI0kZUhIMroaGsxwkag1NpMwZazJLzkcstYwUuy8aLmjV**eAEFwQkBwDAIA0BLQGgb5PAM_xJ2hwv6C84XdBo6dy1r_AHroibXsg0VPcs-KmdDuDFaPN0_JXgRYg**M60XeBXIbtnXxQHIALQIFcswpvCU_JzC3hg5EecWc54Ov2fYf3kzPCfY3NB95nM8xyxv5s0q7X1GbEmCMD5SMQ**NjAxMDk4Nix3YW5xaW5neWluZyzkuIfmuIXpopYsd2FucWluZ3lpbmdAdGVzdC5jb20sMSwwMzI0MDQ2MCwxNjgxNTI0ODM5Mzcw; webNewUuid=42dcffcc4bd860ad47c53b3c9109196a_1681438431082
+Pragma: no-cache
+Referer: http://localhost:3400/main
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36
+sec-ch-ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "macOS"
+
+###
+

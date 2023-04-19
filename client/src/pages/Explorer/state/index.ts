@@ -4,7 +4,7 @@ import { IExploreType, ReduxExploreState, IActionType } from "./def";
 import { asyncActions } from "./async";
 import React from "react";
 import { RootPath } from "client/src/utils/const";
-import {web_fs} from "dts";
+import { web_fs } from "dts";
 
 const actions: typeof ReduxExploreState.actions & typeof asyncActions = {
   ...ReduxExploreState.actions,
@@ -35,6 +35,9 @@ export function useExpPath() {
   const [path] = useSelector<RootStateType, [string]>((state) => [
     state.explore.path,
   ]);
+  React.useEffect(() => {
+    getActions().reLoadFileList(path);
+  }, [path]);
 
   return {
     path: path,
@@ -42,11 +45,24 @@ export function useExpPath() {
   };
 }
 export function useFileList() {
-  const files = useSelector<RootStateType, web_fs.FsStatType[]>((state) => state.explore.fileList);
+  const files = useSelector<RootStateType, web_fs.FsStatType[]>(
+    (state) => state.explore.fileList
+  );
+  const checkedList = useSelector<RootStateType, string[]>(
+    (state) => state.explore.checkedList
+  );
+  const selected = useSelector<RootStateType, web_fs.FsStatType>(
+    (state) => state.explore.selectedFile
+  );
+
+  const isAllChecked = files.length === checkedList.length;
 
   return {
     files: files,
     actions: getActions(),
+    checkedList: checkedList,
+    isAllChecked: isAllChecked,
+    selected: selected,
   };
 }
 

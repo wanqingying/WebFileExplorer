@@ -35,6 +35,7 @@ export declare namespace web_fs {
      * The file extension (if any) such as '.html'
      */
     ext: string;
+    fullName: string;
   }
   export interface BaseRes<T> {
     code: number;

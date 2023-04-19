@@ -10,7 +10,7 @@ function mockAsync<T extends any>(data: T) {
 }
 
 export const asyncActions = {
-  changePath: (path: string, action?: IActionType) => {
+  reLoadFileList: (path: string, action?: IActionType) => {
     action.setLoading(true);
     getFilStatListByPath(path)
       .then((res) => {

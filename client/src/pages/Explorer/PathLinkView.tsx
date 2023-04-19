@@ -1,12 +1,13 @@
 import React, { FC, HTMLProps } from "react";
 import styled from "styled-components";
-import { HomeOutlined } from "@ant-design/icons";
+import { HomeOutlined, RightOutlined } from "@ant-design/icons";
 import { useExpPath, getActions } from "./state";
 
 const RootDiv: React.ElementType<HTMLProps<HTMLDivElement>> = styled.div`
   height: 30px;
   line-height: 30px;
   font-size: 20px;
+  padding-left: 22px;
   .x-sp-link {
     color: #999;
     transition: all 0.3s;
@@ -15,6 +16,9 @@ const RootDiv: React.ElementType<HTMLProps<HTMLDivElement>> = styled.div`
     &:hover {
       color: #444;
     }
+  }
+  .anticon-right{
+    font-size: 16px;
   }
 ` as any;
 
@@ -27,7 +31,7 @@ export const PathLinkView: FC<IProps> = function (props) {
     const result: any[] = [{ path: "/", ele: <HomeOutlined />, isLink: true }];
     const ph = path.split("/").filter(Boolean);
     ph.forEach((p, idx) => {
-      result.push({ path: null, ele: "/", isLink: false });
+      result.push({ path: null, ele: <RightOutlined />, isLink: false });
       result.push({
         path: `/${ph.slice(0, idx + 1).join("/")}`,
         ele: p,
@@ -51,7 +55,7 @@ export const PathLinkView: FC<IProps> = function (props) {
             }}
             onClick={(e) => {
               if (!p.isLink) return;
-              actions.changePath(p.path);
+              actions.setPath(p.path);
             }}
           >
             {p.ele}

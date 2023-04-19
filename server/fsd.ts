@@ -14,6 +14,7 @@ export async function getFileStatByPath(
       createTime: sta.birthtimeMs,
       size: sta.size,
       isFile: sta.isFile(),
+      fullName: pathName,
       ...ps,
     };
   } catch (e) {

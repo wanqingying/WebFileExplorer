@@ -7,13 +7,7 @@ import { Example } from "client/src/pages/Example";
 import { MainFile } from "client/src/pages/Explorer/MainFile";
 import { BaseLayout } from "client/src/components/BaseLayout";
 
-import {
-  Router,
-  Routes,
-  BrowserRouter,
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 function App() {
   const { state, action } = useTodoState();

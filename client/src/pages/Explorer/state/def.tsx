@@ -8,6 +8,8 @@ export interface IExploreType {
   path?: string;
   loading?: boolean;
   fileList?: web_fs.FsStatType[];
+  checkedList: string[];
+  selectedFile?: web_fs.FsStatType;
 }
 
 export const ReduxExploreState = createSlice({
@@ -15,7 +17,9 @@ export const ReduxExploreState = createSlice({
   initialState: {
     todos: [],
     title: "txt",
-    path: "/root/files",
+    path: "/",
+    fileList: [],
+    checkedList: [],
   } as IExploreType,
   reducers: {
     setTitle: (state, action: PayloadAction<string>) => {
@@ -26,6 +30,37 @@ export const ReduxExploreState = createSlice({
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
+    },
+    setPath: (state, action: PayloadAction<string>) => {
+      state.path = action.payload;
+    },
+    openDir: (state, action: PayloadAction<string>) => {
+      state.path = state.path + action.payload;
+      console.log("new path: ", state.path);
+      state.selectedFile = undefined;
+      state.checkedList = [];
+    },
+    checkFile: (state, action: PayloadAction<web_fs.FsStatType>) => {
+      const exist = state.checkedList.find(
+        (item) => item === action.payload.fullName
+      );
+      if (exist) {
+        state.checkedList = state.checkedList.filter(
+          (item) => item !== action.payload.fullName
+        );
+      } else {
+        state.checkedList.push(action.payload.fullName);
+      }
+    },
+    selectFile: (state, action: PayloadAction<web_fs.FsStatType>) => {
+      state.selectedFile = action.payload;
+    },
+    checkAll: (state, action: PayloadAction<boolean>) => {
+      if (action.payload) {
+        state.checkedList = state.fileList.map((item) => item.fullName);
+      } else {
+        state.checkedList = [];
+      }
     },
     setFileList: (state, action: PayloadAction<web_fs.FsStatType[]>) => {
       state.fileList = action.payload;
