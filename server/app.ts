@@ -1,3 +1,4 @@
+const st = Date.now().valueOf();
 const Koa = require("koa");
 const serve = require("koa-static");
 const bodyparser = require("koa-bodyparser");
@@ -7,8 +8,10 @@ import { root } from "./config";
 import fs from "fs";
 import mime from "mime";
 
+console.log("app start root =", root);
+
 const router = new Router();
-import { getFileStatListByFolder } from "./fsd";
+import { getFileStatListByFolder, removeFile } from "./fsd";
 
 const app = new Koa();
 
@@ -37,7 +40,6 @@ router.get("/api/file/list", async (ctx, next: any) => {
 router.get("/api/file/download", async (ctx, next: any) => {
   const file = ctx.request.query.file;
   const p = path.join("/", file);
-  const ps = path.parse(p);
   const mimeType = mime.getType(p);
   console.log("mimeType", mimeType);
   ctx.res.setHeader("Content-disposition", "attachment; filename=" + file);
@@ -47,29 +49,18 @@ router.get("/api/file/download", async (ctx, next: any) => {
   ctx.body = readStream;
   // readStream.pipe(ctx.response);
   readStream.on("end", () => {
-    console.log("download end");
     ctx.res.end();
   });
-  // console.log("download file", file);
-  // if (!file) {
-  //   ctx.body = { data: null, code: 1 };
-  //   return;
-  // }
-  // console.log("file ", path.join(root, file));
-  // try {
-  //   fs.accessSync(path.join(root, file), fs.constants.R_OK);
-  //   const readStream = fs.createReadStream(path.join(root, file), {
-  //     autoClose: true,
-  //   });
-  //   readStream.on("end", () => {
-  //     console.log("download end");
-  //     ctx.res.end();
-  //   });
-  //   ctx.res.setHeader("Content-Type", "application/octet-stream");
-  //   await readStream.pipe(ctx.res);
-  // } catch (e) {
-  //   console.log("e", e);
-  //   ctx.body = { data: null, code: 1, message: e.message };
-  // }
+
   await next();
 });
+
+router.post("/api/file/delete", async (ctx, next: any) => {
+  const file = ctx.request.body;
+  console.log("file", ctx.request.body);
+  ctx.body = await removeFile(file);
+
+  await next();
+});
+
+console.log("app start end  ", Date.now().valueOf() - st);

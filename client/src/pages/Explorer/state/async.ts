@@ -1,5 +1,7 @@
-import { IActionType } from "client/src/pages/Explorer/state/def";
-import { getFilStatListByPath } from "client/src/api";
+import { IActionType, IExploreType } from "client/src/pages/Explorer/state/def";
+import { getFilStatListByPath, deleteFile } from "client/src/api";
+import { web_fs } from "dts";
+import { getActions } from "client/src/pages/Explorer/state/index";
 
 function mockAsync<T extends any>(data: T) {
   return new Promise<T>((resolve) => {
@@ -22,5 +24,17 @@ export const asyncActions = {
         console.error(e);
         action.setLoading(false);
       });
+  },
+  deleteFile: (
+    file: web_fs.FsStatType,
+    action?: IActionType,
+    state?: IExploreType
+  ) => {
+    action.setLoading(true);
+    deleteFile(file).then((res) => {
+      if (res.code !== 0) return Promise.reject(res.msg);
+      action.setLoading(false);
+      getActions().reLoadFileList(state.path);
+    });
   },
 };

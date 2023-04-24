@@ -34,24 +34,20 @@ export async function getFileStatListByFolder(
   );
 }
 
-// export async function test(): Promise<string[]> {
-//   try {
-//     const files = fs.readdirSync(path.resolve(__dirname, config.root));
-//     console.log("files", files);
-//     for (const file of files) {
-//       const sta = await getFileStatByPath(
-//         path.resolve(__dirname, config.root, file)
-//       );
-//       const kb = sta.size / 1024;
-//       console.log("file stat " + file);
-//       console.log(sta);
-//       console.log(`file ${file} size ${kb}kb`);
-//       debugger;
-//     }
-//     return [];
-//   } catch (err) {
-//     console.error(err);
-//     return [];
-//   }
-// }
-// test();
+export async function removeFile(file: web_fs.FsStatType) {
+  const exist = fs.existsSync(file.absolutePath);
+  console.log("exist", exist, file.absolutePath);
+  if (!exist) {
+    return { code: 1, msg: "文件不存在" };
+  }
+  try {
+    if (file.isFile) {
+      fs.unlinkSync(file.absolutePath);
+    } else {
+      fs.rmdirSync(file.absolutePath);
+    }
+    return { code: 0, msg: "删除成功" };
+  } catch (e) {
+    return { code: 1, msg: e.message };
+  }
+}

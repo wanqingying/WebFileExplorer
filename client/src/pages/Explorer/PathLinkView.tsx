@@ -2,6 +2,8 @@ import React, { FC, HTMLProps } from "react";
 import styled from "styled-components";
 import { HomeOutlined, RightOutlined } from "@ant-design/icons";
 import { useExpPath, getActions } from "./state";
+import path from 'path'
+
 
 const RootDiv: React.ElementType<HTMLProps<HTMLDivElement>> = styled.div`
   height: 30px;
@@ -17,7 +19,7 @@ const RootDiv: React.ElementType<HTMLProps<HTMLDivElement>> = styled.div`
       color: #444;
     }
   }
-  .anticon-right{
+  .anticon-right {
     font-size: 16px;
   }
 ` as any;

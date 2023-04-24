@@ -10,6 +10,7 @@ export interface IExploreType {
   fileList?: web_fs.FsStatType[];
   checkedList: string[];
   selectedFile?: web_fs.FsStatType;
+  action?: { name: "copy" | "move"; file: web_fs.FsStatType };
 }
 
 export const ReduxExploreState = createSlice({
@@ -33,10 +34,6 @@ export const ReduxExploreState = createSlice({
     },
     setPath: (state, action: PayloadAction<string>) => {
       state.path = action.payload;
-    },
-    openDir: (state, action: PayloadAction<string>) => {
-      state.path = state.path + action.payload;
-      console.log("new path: ", state.path);
       state.selectedFile = undefined;
       state.checkedList = [];
     },

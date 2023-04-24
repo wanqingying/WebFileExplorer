@@ -96,3 +96,37 @@ export function parseBlob(file: web_fs.FsStatType, blob: Blob) {
       return URL.createObjectURL(blob);
   }
 }
+
+export const path = {
+  join: (...args: string[]) => {
+    let result = [];
+    args.forEach((g) => {
+      if (g.startsWith("/")) {
+        g = g.substring(1);
+      }
+      if (g.endsWith("/")) {
+        g = g.substring(0, g.length - 1);
+      }
+      if (g === ".") {
+        return;
+      }
+      if (g === "..") {
+        result.pop();
+        return;
+      }
+
+      result = result.concat(g.split("/"));
+    });
+
+    return "/" + result.join("/");
+  },
+  resolve: (path: string) => {
+    // if (path.startsWith("/")) {
+    //   path = path.substring(1);
+    // }
+    // if (path.endsWith("/")) {
+    //   path = path.substring(0, path.length - 1);
+    // }
+    // return path.split("/");
+  },
+};

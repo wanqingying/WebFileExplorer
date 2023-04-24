@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Profiler } from "react";
 import reactLogo from "./assets/react.svg";
 import { Provider, useStore, useDispatch } from "react-redux";
 import { store } from "client/src/store";
@@ -28,9 +28,14 @@ function App() {
 }
 
 export default (prop) => {
-  return (
-    <Provider store={store}>
-      <App {...prop} />
-    </Provider>
-  );
+  React.useEffect(() => {
+    console.log("app init xx");
+  }, []);
+  return React.useMemo(function () {
+    return (
+      <Provider store={store}>
+        <App {...prop} />
+      </Provider>
+    );
+  }, []);
 };

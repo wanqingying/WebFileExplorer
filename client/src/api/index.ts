@@ -13,3 +13,6 @@ export const downloadFile = (path: string): web_fs.AxResType<any> => {
     responseType: "blob",
   });
 };
+export const deleteFile = (file: web_fs.FsStatType): web_fs.AxResType<any> => {
+  return request.post("/api/file/delete", file);
+};

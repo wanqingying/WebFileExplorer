@@ -17,7 +17,7 @@ export function getActions(): typeof actions {
     get: (target: any, prop: string, rx) => {
       return (p) =>
         asyncActions[prop]
-          ? asyncActions[prop](p, rx)
+          ? asyncActions[prop](p, rx, store.getState().explore)
           : dispatch(actions[prop](p));
     },
   });
@@ -27,8 +27,7 @@ export function useExpState() {
   const state = useSelector<RootStateType, IExploreType>(
     (state) => state.explore
   );
-  const action = getActions();
-  return { state: state, action: action };
+  return { state: state, actions: getActions() };
 }
 
 export function useExpPath() {
@@ -36,6 +35,7 @@ export function useExpPath() {
     state.explore.path,
   ]);
   React.useEffect(() => {
+    console.log("reload", path);
     getActions().reLoadFileList(path);
   }, [path]);
 

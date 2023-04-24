@@ -1,19 +1,11 @@
 import React, { FC, HTMLProps } from "react";
 import styled from "styled-components";
 import { web_fs } from "dts";
-import { useFileList } from "./state";
-import {
-  FileFilled,
-  FolderFilled,
-  FileOutlined,
-  FolderOutlined,
-  FileImageOutlined,
-  FileZipOutlined,
-  FileTextOutlined,
-} from "@ant-design/icons";
-import { Checkbox } from "antd";
+import { useFileList, useExpState } from "./state";
+import { SettingOutlined, WarningOutlined } from "@ant-design/icons";
+import { Checkbox, Dropdown, Modal } from "antd";
 import { getFileExtType, fileIconView } from "client/src/pages/Explorer/help";
-import { IconJson } from "client/src/components/icons/IconJson";
+import { path } from "./help";
 
 const RootDiv: React.ElementType<HTMLProps<HTMLDivElement>> = styled.div`
   // css style
@@ -57,6 +49,7 @@ const RootDiv: React.ElementType<HTMLProps<HTMLDivElement>> = styled.div`
       display: flex;
       cursor: pointer;
       transition: background-color 0.3s;
+      margin-bottom: 10px;
       &:hover {
         background-color: #eee;
       }
@@ -94,7 +87,9 @@ interface IProps {
 
 // desc
 export const FileStatList: FC<IProps> = function (props) {
-  const { files, actions, isAllChecked, checkedList } = useFileList();
+  const { state, actions } = useExpState();
+
+  const { files, isAllChecked, checkedList } = useFileList();
   console.log("files list", files);
 
   function sortFiles(files: web_fs.FsStatType[]): web_fs.FsStatType[] {
@@ -140,6 +135,9 @@ export const FileStatList: FC<IProps> = function (props) {
         <div className="fs-size  fh-cell fx-1">大小</div>
         <div className="fs-create  fh-cell fx-1">创建时间</div>
         <div className="fs-update  fh-cell fx-1">更新时间</div>
+        <div className="fs-sett  fh-cell " style={{ width: 100 }}>
+          操作
+        </div>
       </div>
       <div className="fs-list">
         {newFiles.map((file) => {
@@ -153,7 +151,11 @@ export const FileStatList: FC<IProps> = function (props) {
                   // open file
                 } else {
                   // open dir
-                  actions.openDir(file.name);
+                  console.log("file ", file);
+
+                  // actions.setPath(state.path + file.name);
+                  console.log("new path", path.join(state.path, file.name));
+                  actions.setPath(path.join(state.path, file.name));
                 }
               }}
               onCheck={() => {
@@ -202,6 +204,53 @@ function FileStatItem(props: IProps2) {
       <div className="fs-size  fb-cell fx-1">{file.size}</div>
       <div className="fs-create  fb-cell fx-1">{file.createTime}</div>
       <div className="fs-update  fb-cell fx-1">{file.updateTime}</div>
+      <div className="fs-sett  fb-cell" style={{ width: 100 }}>
+        <Dropdown
+          placement={"bottom"}
+          trigger={["click"]}
+          menu={{
+            items: [
+              {
+                key: "copy",
+                label: "复制",
+                onClick: () => {
+                  console.log("delete file", file);
+                },
+              },
+              {
+                key: "move",
+                label: "移动",
+                onClick: () => {
+                  console.log("delete file", file);
+                },
+              },
+              {
+                key: "delete",
+                label: "删除",
+                onClick: () => {
+                  console.log("delete file", file);
+                  const md = Modal.confirm({
+                    title: "确认删除?",
+                    content: "删除后不可恢复",
+                    icon: <WarningOutlined />,
+                    cancelText: "取消",
+                    okText: "确认",
+                    onCancel: () => {
+                      md.destroy();
+                    },
+                    onOk: () => {
+                      md.destroy();
+                      actions.deleteFile(file);
+                    },
+                  });
+                },
+              },
+            ],
+          }}
+        >
+          <SettingOutlined />
+        </Dropdown>
+      </div>
     </div>
   );
 }
